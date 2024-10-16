@@ -1,0 +1,77 @@
+@import '../../_variables.scss'; /* Import the variables */
+
+/* Game Container Styles */
+.game-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: $gap-base;
+  padding: $padding-base;
+  height: 80%;
+  background-color: $dark-background;
+}
+
+/* Element List, Code Example, and Site Preview Sections */
+.element-list,
+.code-example,
+.site-preview {
+  border: 1px solid $border-color;
+  padding: $padding-base;
+  border-radius: $border-radius-base;
+  background-color: $light-background;
+}
+
+.element-list li.dragging {
+  opacity: 0.6;
+  transform: rotate(3deg);
+  background-color: #f0f0f0;
+}
+
+/* Individual Section Styling */
+.element-list {
+  grid-column: 1 / 2;
+}
+
+.code-example {
+  grid-column: 2 / 3;
+}
+
+.site-preview {
+  grid-column: 3 / 4;
+}
+
+.tag {
+  margin: 10px 0;
+  padding: 8px;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  cursor: grab;
+  background-color: $dark-background;
+  color: $primary-color;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-family: $font-monospace;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 90%;
+
+  &:hover {
+    background-color: $primary-color;
+    border-color: $secondary-color;
+  }
+}
+
+/* Code example styling */
+.code-example pre {
+  background-color: $dark-background;
+  padding: 15px;
+  border-radius: $border-radius-base;
+  overflow: auto;
+  font-family: $font-monospace;
+  height: 96%;
+}
+
+/* Preview area */
+.site-preview .preview {
+  padding: $padding-base;
+  border-radius: $border-radius-base;
+  background-color: $dark-background;
+}

@@ -1,0 +1,24 @@
+/* Variables */
+$primary-color: #00cc66; /* Muted Green */
+$secondary-color: #00b3b3; /* Soft Cyan */
+$accent-yellow: #d4b300; /* Subtle Yellow */
+$dark-background: #1f1f1f; /* Dark Background (CLI style) */
+$light-background: #2e2e2e; /* Slightly lighter background for sections */
+$text-light: rgba(255, 255, 255, 0.87); /* Light Text */
+$text-muted: rgba(255, 255, 255, 0.6); /* Muted Text */
+$button-background: #333333; /* Darker Button Background */
+$border-color: #646cff; /* Border color for sections */
+$hover-color: #00e5cc; /* Cyan color for hover effect */
+
+/* Missing variable */
+$text-dark: #c0c0c0; /* Softer dark text color (gray) */
+
+/* Spacing Variables */
+$padding-base: 20px;
+$gap-base: 20px;
+
+/* Border Variables */
+$border-radius-base: 8px;
+
+/* Font */
+$font-monospace: 'Courier New', Courier, monospace;
