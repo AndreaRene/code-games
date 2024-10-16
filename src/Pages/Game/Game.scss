@@ -4,9 +4,10 @@
 .game-container {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
+  grid-template-rows: 0.1fr 1.9fr;
   gap: $gap-base;
   padding: $padding-base;
-  height: 80%;
+  height: 100%;
   background-color: $dark-background;
 }
 
@@ -31,12 +32,33 @@
   grid-column: 1 / 2;
 }
 
+.tags-message {
+  font-size: 1.2rem;
+  color: $text-muted;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
 .code-example {
   grid-column: 2 / 3;
 }
 
+.code-message {
+  font-size: 1.2rem;
+  color: $text-muted;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
 .site-preview {
   grid-column: 3 / 4;
+}
+
+.site-message {
+  font-size: 1.2rem;
+  color: $text-muted;
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
 }
 
 .tag {
@@ -47,11 +69,13 @@
   cursor: grab;
   background-color: $dark-background;
   color: $primary-color;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
   font-family: $font-monospace;
   font-size: 1.2rem;
   text-align: center;
-  width: 90%;
+  width: 100%;
 
   &:hover {
     background-color: $primary-color;

@@ -2,32 +2,32 @@ import './Game.scss';
 import { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
-// Initial tag list
 const initialTags = [
-  { id: 'tag-1', content: '<html>' },
-  { id: 'tag-2', content: '</html>' },
-  { id: 'tag-3', content: '<head>' },
-  { id: 'tag-4', content: '</head>' },
-  { id: 'tag-5', content: '<body>' },
-  { id: 'tag-6', content: '</body>' },
-  { id: 'tag-7', content: '<header>' },
-  { id: 'tag-8', content: 'This is the header for the website.' },
-  { id: 'tag-9', content: '</header>' },
-  { id: 'tag-10', content: '<section>' },
-  { id: 'tag-11', content: 'This is a section about the website.' },
-  { id: 'tag-12', content: '</section>' },
-  { id: 'tag-13', content: '<p>' },
-  { id: 'tag-14', content: 'This is a paragraph explaining the section.' },
-  { id: 'tag-15', content: '</p>' },
-  { id: 'tag-16', content: '<aside>' },
-  { id: 'tag-17', content: 'This is an aside with extra information.' },
-  { id: 'tag-18', content: '</aside>' },
-  { id: 'tag-19', content: '<footer>' },
-  { id: 'tag-20', content: 'This is the footer with contact info.' },
-  { id: 'tag-21', content: '</footer>' },
+  { id: 'tag-1', content: '<html>', level: 0 },
+  { id: 'tag-2', content: '<body>', level: 1 },
+  { id: 'tag-3', content: '<header>', level: 2 },
+  { id: 'tag-4', content: 'This is the header for the website.', level: 3 },
+  { id: 'tag-5', content: '</header>', level: 2 },
+  { id: 'tag-6', content: '<main>', level: 2 },
+  { id: 'tag-7', content: 'This is the main content of the page.', level: 3 },
+  { id: 'tag-8', content: '<section>', level: 3 },
+  { id: 'tag-9', content: 'This is a section about the website.', level: 4 },
+  { id: 'tag-10', content: '<p>', level: 4 },
+  {
+    id: 'tag-11',
+    content: 'This is a paragraph explaining the section.',
+    level: 5,
+  },
+  { id: 'tag-12', content: '</p>', level: 4 },
+  { id: 'tag-13', content: '</section>', level: 3 },
+  { id: 'tag-14', content: '</main>', level: 2 },
+  { id: 'tag-15', content: '<footer>', level: 2 },
+  { id: 'tag-16', content: 'This is the footer with contact info.', level: 3 },
+  { id: 'tag-17', content: '</footer>', level: 2 },
+  { id: 'tag-18', content: '</body>', level: 1 },
+  { id: 'tag-19', content: '</html>', level: 0 },
 ];
 
-// Helper function to reorder the list after drag and drop
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -35,16 +35,19 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
+const formatCodeWithIndentation = (tagList) => {
+  return tagList.map((tag) => '  '.repeat(tag.level) + tag.content).join('\n');
+};
+
 const GameContainer = () => {
   const [tagList, setTagList] = useState(() => {
-    // Shuffle the tags only once when the component is initialized
     return [...initialTags].sort(() => Math.random() - 0.5);
   });
 
   // Function to handle the drag end
   const onDragEnd = (result) => {
     if (!result.destination) {
-      return; // If dropped outside the list, do nothing
+      return;
     }
 
     const newTagList = reorder(
@@ -52,14 +55,14 @@ const GameContainer = () => {
       result.source.index,
       result.destination.index
     );
-    setTagList(newTagList); // Update the tag list with the new order
+    setTagList(newTagList);
   };
 
   return (
     <main className='game-container'>
       {/* Sidebar: List of Tags */}
+      <h2 className='tags-message'>Drag these HTML tags</h2>
       <section className='element-list'>
-        <h2>Drag these HTML tags</h2>
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId='tags'>
             {(provided) => (
@@ -99,16 +102,16 @@ const GameContainer = () => {
       </section>
 
       {/* Code Example Section */}
+      <h2 className='code-message'>View your code:</h2>
       <section className='code-example'>
-        <h2>View your code:</h2>
         <pre>
-          <code>{tagList.map((tag) => tag.content).join('\n')}</code>
+          <code>{formatCodeWithIndentation(tagList)}</code>
         </pre>
       </section>
 
       {/* Site Preview Section */}
+      <h2 className='site-message'>Check out your site!</h2>
       <section className='site-preview'>
-        <h2>Check out your site!</h2>
         <div className='preview'>
           <p>/* Preview of your site will appear here */</p>
         </div>
