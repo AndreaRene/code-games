@@ -28,6 +28,37 @@ const initialTags = [
   { id: 'tag-19', content: '</html>', level: 0 },
 ];
 
+const correctOrder = [
+  'tag-1',
+  'tag-2',
+  'tag-3',
+  'tag-4',
+  'tag-5',
+  'tag-6',
+  'tag-7',
+  'tag-8',
+  'tag-9',
+  'tag-10',
+  'tag-11',
+  'tag-12',
+  'tag-13',
+  'tag-14',
+  'tag-15',
+  'tag-16',
+  'tag-17',
+  'tag-18',
+  'tag-19',
+];
+
+const isCorrectOrder = (currentTagList) => {
+  for (let i = 0; i < currentTagList.length; i++) {
+    if (currentTagList[i].id !== correctOrder[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -36,7 +67,15 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const formatCodeWithIndentation = (tagList) => {
-  return tagList.map((tag) => '  '.repeat(tag.level) + tag.content).join('\n');
+  return tagList
+    .map((tag, index) => {
+      if (tag.id === correctOrder[index]) {
+        return '  '.repeat(tag.level) + tag.content;
+      } else {
+        return `/* Incorrect order: "${tag.content}" */`;
+      }
+    })
+    .join('\n');
 };
 
 const GameContainer = () => {
@@ -113,7 +152,22 @@ const GameContainer = () => {
       <h2 className='site-message'>Check out your site!</h2>
       <section className='site-preview'>
         <div className='preview'>
-          <p>/* Preview of your site will appear here */</p>
+          {tagList.map((tag, index) => {
+            // Check if the current tag is in the correct position
+            if (tag.id === correctOrder[index]) {
+              return <div key={tag.id}>{tag.content}</div>;
+            } else {
+              return (
+                <div key={tag.id} className='placeholder'>
+                  {/* Render a placeholder if the order is incorrect */}
+                  <p>
+                    This section cannot be displayed yet. Please adjust the tag
+                    order.
+                  </p>
+                </div>
+              );
+            }
+          })}
         </div>
       </section>
     </main>
