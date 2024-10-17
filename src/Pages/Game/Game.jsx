@@ -32,18 +32,73 @@ const initialTags = [
   { id: 'tag-19', content: '</html>', level: 0 },
 ];
 
+const correctOrder = [
+  'tag-1', // <html>
+  'tag-2', // <body>
+  'tag-3', // <header>
+  'tag-4', // I am a header! I am usually at the top.
+  'tag-5', // </header>
+  'tag-6', // <main>
+  'tag-7', // I contain the main content of the page.
+  'tag-8', // <section>
+  'tag-9', // I am a section inside the main element.
+  'tag-10', // <p>
+  'tag-11', // I am a paragraph inside a section.
+  'tag-12', // </p>
+  'tag-13', // </section>
+  'tag-14', // </main>
+  'tag-15', // <footer>
+  'tag-16', // I am a footer! I am usually at the bottom.
+  'tag-17', // </footer>
+  'tag-18', // </body>
+  'tag-19', // </html>
+];
+
+const shuffleArray = (array) => {
+  const shuffled = [...array]; // Create a copy of the array
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 const initialDropZones = Array(initialTags.length).fill(null);
 
 const GameContainer = () => {
-  const [tagList, setTagList] = useState(initialTags);
+  const [tagList, setTagList] = useState(() => shuffleArray(initialTags));
   const [dropZones, setDropZones] = useState(initialDropZones);
 
   const onDragEnd = (result) => {
-    const { destination } = result;
+    const { source, destination } = result;
 
+    // Check if dropped outside the drop zone
     if (!destination || destination.droppableId === 'tags') {
       return;
     }
+
+    // Get the index of the drop zone
+    const dropZoneIndex = parseInt(destination.droppableId.split('-')[1]);
+
+    // Get the tag that was dragged
+    const draggedTag = tagList[source.index];
+
+    // Create a new copy of drop zones
+    const newDropZones = [...dropZones];
+
+    // Check if the dragged tag is the correct one for this zone
+    const isCorrect = draggedTag.id === correctOrder[dropZoneIndex];
+
+    // Set the tag into the drop zone and include isCorrect status
+    newDropZones[dropZoneIndex] = { ...draggedTag, isCorrect };
+
+    // Update drop zones
+    setDropZones(newDropZones);
+
+    // Optionally: Remove the tag from the list of draggable tags if you want it to disappear from the left column
+    const newTagList = [...tagList];
+    newTagList.splice(source.index, 1);
+    setTagList(newTagList);
   };
 
   return (
@@ -81,7 +136,6 @@ const GameContainer = () => {
         </section>
 
         {/* Second column: Drop zones */}
-        <h2 className='drop-message'>Drop the tags here</h2>
         <section className='drop-zone-list'>
           {dropZones.map((zone, index) => (
             <Droppable key={index} droppableId={`drop-${index}`}>
@@ -89,9 +143,9 @@ const GameContainer = () => {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className='drop-zone'
+                  className={`drop-zone ${zone ? (zone.isCorrect ? 'correct' : 'incorrect') : ''}`}
                 >
-                  {zone ? <code>{zone.content}</code> : 'Drop here'}
+                  {zone ? <code>{zone.content}</code> : ''}
                   {provided.placeholder}
                 </div>
               )}
