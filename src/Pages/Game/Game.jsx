@@ -35,22 +35,17 @@ const initialTags = [
 const GameContainer = () => {
   const [tagList, setTagList] = useState(initialTags);
 
-  // Handle drag end without allowing sorting in the first column
   const onDragEnd = (result) => {
     const { destination } = result;
 
-    // If no destination or dropped back into the same column, don't do anything
     if (!destination || destination.droppableId === 'tags') {
       return;
     }
-
-    // The rest of the code will handle dragging into drop zones in the second step
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className='game-container'>
-        {/* Sidebar: List of Tags - Draggable but not sortable */}
         <h2 className='tags-message'>Drag these HTML tags</h2>
         <section className='element-list'>
           <Droppable droppableId='tags' isDropDisabled={true}>
