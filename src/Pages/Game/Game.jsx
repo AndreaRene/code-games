@@ -32,8 +32,11 @@ const initialTags = [
   { id: 'tag-19', content: '</html>', level: 0 },
 ];
 
+const initialDropZones = Array(initialTags.length).fill(null);
+
 const GameContainer = () => {
   const [tagList, setTagList] = useState(initialTags);
+  const [dropZones, setDropZones] = useState(initialDropZones);
 
   const onDragEnd = (result) => {
     const { destination } = result;
@@ -46,15 +49,12 @@ const GameContainer = () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className='game-container'>
+        {/* First column: Draggable tags */}
         <h2 className='tags-message'>Drag these HTML tags</h2>
         <section className='element-list'>
           <Droppable droppableId='tags' isDropDisabled={true}>
             {(provided) => (
-              <ul
-                className='button-container'
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
+              <ul {...provided.droppableProps} ref={provided.innerRef}>
                 {tagList.map((tag, index) => (
                   <Draggable key={tag.id} draggableId={tag.id} index={index}>
                     {(provided, snapshot) => (
@@ -62,15 +62,11 @@ const GameContainer = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className={`tag tag-${index + 1} ${
-                          snapshot.isDragging ? 'dragging' : ''
-                        }`}
+                        className={`tag ${snapshot.isDragging ? 'dragging' : ''}`}
                         style={{
                           ...provided.draggableProps.style,
                           background: snapshot.isDragging ? '#e0e0e0' : '',
-                          boxShadow: snapshot.isDragging
-                            ? '0 2px 8px rgba(0, 0, 0, 0.2)'
-                            : '',
+                          padding: '8px',
                         }}
                       >
                         <code>{tag.content}</code>
@@ -82,6 +78,33 @@ const GameContainer = () => {
               </ul>
             )}
           </Droppable>
+        </section>
+
+        {/* Second column: Drop zones */}
+        <h2 className='drop-message'>Drop the tags here</h2>
+        <section className='drop-zone-list'>
+          {dropZones.map((zone, index) => (
+            <Droppable key={index} droppableId={`drop-${index}`}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className='drop-zone'
+                >
+                  {zone ? <code>{zone.content}</code> : 'Drop here'}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))}
+        </section>
+
+        {/* Third column: Code Preview */}
+        <h2 className='code-message'>Your code preview</h2>
+        <section className='code-example'>
+          {/* <pre>
+            <code>{formatCodeWithIndentation(tagList)}</code>
+          </pre> */}
         </section>
       </div>
     </DragDropContext>
