@@ -21,6 +21,12 @@
   background-color: $light-background;
 }
 
+.element-list ul {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
 .tags-message {
   font-size: 1.2rem;
   color: $text-muted;
@@ -30,9 +36,9 @@
 
 /* Draggable tag styles */
 .tag {
-  margin: 10px 0;
+  // margin: 10px 0;
   padding: 8px;
-  border: 1px solid $border-color;
+  border: 1px dashed $border-color;
   border-radius: 4px;
   cursor: grab;
   background-color: $dark-background;
@@ -44,6 +50,10 @@
   font-size: 1.2rem;
   text-align: center;
   width: 100%;
+  box-shadow:
+    rgba(43, 43, 209, 0.418) 0px 50px 100px -20px,
+    rgba(10, 8, 143, 0.3) 0px 30px 60px -30px,
+    rgba(34, 118, 202, 0.35) 0px -2px 6px 0px inset;
 
   &:hover {
     background-color: $light-background;
@@ -61,18 +71,20 @@
 
 .drop-zone-list {
   grid-column: 2 / 3;
-  // display: flex;
-  // flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   padding: $padding-base;
   border-radius: $border-radius-base;
   background-color: $light-background;
+  height: 100%;
   // gap: 10px;
 }
 
 .drop-zone {
-  margin: 10px 0;
-  padding: 8px;
-  border: 1px solid $border-color;
+  // margin: 10px 0;
+  padding: 9px;
+  border: 2px solid $border-color;
   border-radius: 4px;
   cursor: grab;
   background-color: $dark-background;
