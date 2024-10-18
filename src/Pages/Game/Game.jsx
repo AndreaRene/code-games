@@ -123,7 +123,7 @@ const GameContainer = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className='game-container'>
         {/* First column: Draggable tags */}
-        <h2 className='tags-message'>Drag these HTML tags</h2>
+        <h2 className='tags-message'>Drag the HTML tags and content</h2>
         <section className='element-list'>
           <Droppable droppableId='tags' isDropDisabled={true}>
             {(provided) => (
@@ -140,6 +140,7 @@ const GameContainer = () => {
                           ...provided.draggableProps.style,
                           background: snapshot.isDragging ? '#e0e0e0' : '',
                           padding: '8px',
+                          gridRow: index + 1, // Assign the row dynamically based on the index
                         }}
                       >
                         <code>{tag.content}</code>
@@ -154,6 +155,7 @@ const GameContainer = () => {
         </section>
 
         {/* Second column: Drop zones */}
+        <h2 className='drop-message'>Drop them here in the correct order </h2>
         <section className='drop-zone-list'>
           {dropZones.map((zone, index) => (
             <Droppable
@@ -176,8 +178,14 @@ const GameContainer = () => {
         </section>
 
         {/* Third column: Code Preview */}
-        <h2 className='code-message'>Your code preview</h2>
+        <h2 className='code-message'>View your code as you go</h2>
         <section className='code-example'>
+          {/* <pre>
+            <code>{formatCodeWithIndentation(tagList)}</code>
+          </pre> */}
+        </section>
+        <h2 className='progress-message'>Track your progress</h2>
+        <section className='progress-area'>
           {/* <pre>
             <code>{formatCodeWithIndentation(tagList)}</code>
           </pre> */}

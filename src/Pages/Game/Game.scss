@@ -3,11 +3,11 @@
 /* Game Container Styles */
 .game-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 0.1fr 1.8fr 0.1fr;
+  grid-template-columns: 1fr 1fr 1fr 0.5fr;
+  grid-template-rows: 0.1fr 2fr;
   gap: $gap-base;
-  padding: $padding-base;
-  height: 100%;
+  padding: 0 $padding-base;
+  height: 98%;
   background-color: $dark-background;
 }
 
@@ -15,26 +15,24 @@
 
 .element-list {
   grid-column: 1 / 2;
-  // border: 1px solid $border-color;
   padding: 0 $padding-base;
   border-radius: $border-radius-base;
-  // background-color: $light-background;
   border-left: 1px solid $border-color;
   border-right: 1px solid $border-color;
 }
 
 .element-list ul {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(19, 54px);
+  gap: 10px;
 }
+
 .tags-message {
   display: flex;
   align-items: flex-end;
-  padding: 1rem 1rem 0 1rem;
-  font-size: 1.2rem;
+  padding: 1rem 2rem 0;
+  font-size: 1.3rem;
   color: $text-muted;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
@@ -46,12 +44,11 @@
 
 /* Draggable tag styles */
 .tag {
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  // margin: 10px 0;
   height: 40px;
-  // padding: 1px;
   border: 1px dashed $border-color;
   border-radius: $border-radius-base;
   cursor: grab;
@@ -60,11 +57,11 @@
   transition:
     background-color 0.3s,
     border-color 0.3s,
-    transform 0.4s ease,
+    transform 1s ease,
     background-color 0.3s ease;
   font-family: $font-monospace;
   font-size: 1.2rem;
-  width: 96%;
+  width: 94%;
   box-shadow:
     rgba(43, 43, 209, 0.418) 0px 50px 100px -20px,
     rgba(10, 8, 143, 0.3) 0px 30px 60px -30px,
@@ -78,7 +75,6 @@
 
 .element-list li.dragging {
   opacity: 0.6;
-  // transform: rotate(3deg);
   background-color: #f0f0f0;
 }
 
@@ -91,9 +87,7 @@
   justify-content: space-evenly;
   padding: 0 $padding-base;
   border-radius: $border-radius-base;
-  // background-color: $light-background;
   height: 100%;
-  // gap: 10px;
   border-left: 1px solid $border-color;
   border-right: 1px solid $border-color;
 }
@@ -165,4 +159,23 @@
   overflow: auto;
   font-family: $font-monospace;
   height: 96%;
+}
+
+.progress-message {
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem 2rem 0;
+  font-size: 1.3rem;
+  color: $text-muted;
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+}
+
+.progress-area {
+  grid-column: 4 / 5;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  padding: $padding-base;
+  border-radius: $border-radius-base;
+  background-color: $light-background;
 }
