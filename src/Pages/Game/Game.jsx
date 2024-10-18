@@ -89,16 +89,34 @@ const GameContainer = () => {
     // Check if the dragged tag is the correct one for this zone
     const isCorrect = draggedTag.id === correctOrder[dropZoneIndex];
 
-    // Set the tag into the drop zone and include isCorrect status
-    newDropZones[dropZoneIndex] = { ...draggedTag, isCorrect };
+    if (isCorrect) {
+      // Set the tag into the drop zone and lock the zone
+      newDropZones[dropZoneIndex] = { ...draggedTag, isCorrect };
 
-    // Update drop zones
-    setDropZones(newDropZones);
+      // Remove the tag from the list of draggable tags (left column)
+      const newTagList = [...tagList];
+      newTagList.splice(source.index, 1);
+      setTagList(newTagList);
 
-    // Optionally: Remove the tag from the list of draggable tags if you want it to disappear from the left column
-    const newTagList = [...tagList];
-    newTagList.splice(source.index, 1);
-    setTagList(newTagList);
+      // Update drop zones
+      setDropZones(newDropZones);
+    } else {
+      // Temporarily show the red border for the incorrect drop
+      setDropZones((prevZones) => {
+        const tempZones = [...prevZones];
+        tempZones[dropZoneIndex] = { ...draggedTag, isCorrect: false };
+        return tempZones;
+      });
+
+      // Slide back the incorrect tag after a short delay
+      setTimeout(() => {
+        setDropZones((prevZones) => {
+          const resetZones = [...prevZones];
+          resetZones[dropZoneIndex] = null; // Clear the incorrect zone
+          return resetZones;
+        });
+      }, 800);
+    }
   };
 
   return (
@@ -141,7 +159,7 @@ const GameContainer = () => {
             <Droppable
               key={index}
               droppableId={`drop-${index}`}
-              isDropDisabled={!!zone} // Disable drop if a tag is already in this zone
+              isDropDisabled={!!zone && zone.isCorrect} // Disable drop if a tag is already in this zone and correct
             >
               {(provided) => (
                 <div
@@ -149,8 +167,7 @@ const GameContainer = () => {
                   {...provided.droppableProps}
                   className={`drop-zone ${zone ? (zone.isCorrect ? 'correct' : 'incorrect') : ''}`}
                 >
-                  {zone ? <code>{zone.content}</code> : ''}{' '}
-                  {/* Display tag content if the zone is occupied */}
+                  {zone ? <code>{zone.content}</code> : ''}
                   {provided.placeholder}
                 </div>
               )}

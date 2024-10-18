@@ -40,6 +40,10 @@
   grid-row: 1 / 2;
 }
 
+.drop-zone.incorrect {
+  border-color: red;
+}
+
 /* Draggable tag styles */
 .tag {
   display: flex;
@@ -55,7 +59,9 @@
   color: $primary-color;
   transition:
     background-color 0.3s,
-    border-color 0.3s;
+    border-color 0.3s,
+    transform 0.4s ease,
+    background-color 0.3s ease;
   font-family: $font-monospace;
   font-size: 1.2rem;
   width: 96%;
