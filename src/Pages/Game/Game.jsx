@@ -138,14 +138,19 @@ const GameContainer = () => {
         {/* Second column: Drop zones */}
         <section className='drop-zone-list'>
           {dropZones.map((zone, index) => (
-            <Droppable key={index} droppableId={`drop-${index}`}>
+            <Droppable
+              key={index}
+              droppableId={`drop-${index}`}
+              isDropDisabled={!!zone} // Disable drop if a tag is already in this zone
+            >
               {(provided) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   className={`drop-zone ${zone ? (zone.isCorrect ? 'correct' : 'incorrect') : ''}`}
                 >
-                  {zone ? <code>{zone.content}</code> : ''}
+                  {zone ? <code>{zone.content}</code> : ''}{' '}
+                  {/* Display tag content if the zone is occupied */}
                   {provided.placeholder}
                 </div>
               )}
