@@ -3,7 +3,7 @@
 /* Game Container Styles */
 .game-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 1fr 0.75fr;
   grid-template-rows: 0.1fr 2fr;
   gap: $gap-base;
   padding: 0 $padding-base;
@@ -15,7 +15,7 @@
 
 .element-list {
   grid-column: 1 / 2;
-  padding: 0 $padding-base;
+  padding: 10px $padding-base;
   border-radius: $border-radius-base;
   border-left: 1px solid $border-color;
   border-right: 1px solid $border-color;
@@ -36,10 +36,6 @@
   color: $text-muted;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-}
-
-.drop-zone.incorrect {
-  border-color: red;
 }
 
 /* Draggable tag styles */
@@ -137,7 +133,6 @@
   grid-column: 3 / 4;
   border-left: 1px solid $border-color;
   border-right: 1px solid $border-color;
-  padding: $padding-base;
   border-radius: $border-radius-base;
   background-color: $light-background;
 }
@@ -158,7 +153,51 @@
   border-radius: $border-radius-base;
   overflow: auto;
   font-family: $font-monospace;
-  height: 96%;
+  height: 100%;
+}
+
+/* New code preview styles with static line numbers */
+.code-preview {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  background-color: $dark-background;
+  color: $primary-color;
+  font-family: $font-monospace;
+  border-radius: $border-radius-base;
+  height: 100%;
+}
+
+.line-numbers {
+  background-color: $light-background;
+  text-align: right;
+  padding-right: 10px;
+  border-right: 1px solid $border-color;
+  color: $text-muted;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: $border-radius-base 0 0 $border-radius-base;
+}
+
+.line-numbers span {
+  height: 25px;
+}
+
+.code-lines {
+  padding-left: 10px;
+  font-size: 1.2rem;
+  white-space: pre-wrap;
+  color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.code-lines pre {
+  margin: 0;
+  padding: 0 0 0 10px;
+  font-size: 1.2rem;
+  color: $primary-color;
 }
 
 .progress-message {

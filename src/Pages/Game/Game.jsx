@@ -13,11 +13,7 @@ const initialTags = [
   { id: 'tag-8', content: '<section>', level: 3 },
   { id: 'tag-9', content: 'I am a section inside the main element.', level: 4 },
   { id: 'tag-10', content: '<p>', level: 4 },
-  {
-    id: 'tag-11',
-    content: 'I am a paragraph inside a section.',
-    level: 5,
-  },
+  { id: 'tag-11', content: 'I am a paragraph inside a section.', level: 5 },
   { id: 'tag-12', content: '</p>', level: 4 },
   { id: 'tag-13', content: '</section>', level: 3 },
   { id: 'tag-14', content: '</main>', level: 2 },
@@ -33,29 +29,29 @@ const initialTags = [
 ];
 
 const correctOrder = [
-  'tag-1', // <html>
-  'tag-2', // <body>
-  'tag-3', // <header>
-  'tag-4', // I am a header! I am usually at the top.
-  'tag-5', // </header>
-  'tag-6', // <main>
-  'tag-7', // I contain the main content of the page.
-  'tag-8', // <section>
-  'tag-9', // I am a section inside the main element.
-  'tag-10', // <p>
-  'tag-11', // I am a paragraph inside a section.
-  'tag-12', // </p>
-  'tag-13', // </section>
-  'tag-14', // </main>
-  'tag-15', // <footer>
-  'tag-16', // I am a footer! I am usually at the bottom.
-  'tag-17', // </footer>
-  'tag-18', // </body>
-  'tag-19', // </html>
+  'tag-1',
+  'tag-2',
+  'tag-3',
+  'tag-4',
+  'tag-5',
+  'tag-6',
+  'tag-7',
+  'tag-8',
+  'tag-9',
+  'tag-10',
+  'tag-11',
+  'tag-12',
+  'tag-13',
+  'tag-14',
+  'tag-15',
+  'tag-16',
+  'tag-17',
+  'tag-18',
+  'tag-19',
 ];
 
 const shuffleArray = (array) => {
-  const shuffled = [...array]; // Create a copy of the array
+  const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -68,6 +64,7 @@ const initialDropZones = Array(initialTags.length).fill(null);
 const GameContainer = () => {
   const [tagList, setTagList] = useState(() => shuffleArray(initialTags));
   const [dropZones, setDropZones] = useState(initialDropZones);
+  const [correctTags, setCorrectTags] = useState([]);
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
@@ -100,6 +97,9 @@ const GameContainer = () => {
 
       // Update drop zones
       setDropZones(newDropZones);
+
+      // Add to correct tags
+      setCorrectTags((prev) => [...prev, draggedTag]);
     } else {
       // Temporarily show the red border for the incorrect drop
       setDropZones((prevZones) => {
@@ -112,7 +112,7 @@ const GameContainer = () => {
       setTimeout(() => {
         setDropZones((prevZones) => {
           const resetZones = [...prevZones];
-          resetZones[dropZoneIndex] = null; 
+          resetZones[dropZoneIndex] = null;
           return resetZones;
         });
       }, 800);
@@ -180,13 +180,19 @@ const GameContainer = () => {
         {/* Third column: Code Preview */}
         <h2 className='code-message'>View your code as you go</h2>
         <section className='code-example'>
-          {/* <pre>
-            <code>{formatCodeWithIndentation(tagList)}</code>
-          </pre> */}
+          <div className='code-preview'>
+            <div className='line-numbers'>
+              {Array.from({ length: 30 }, (_, i) => (
+                <span key={i + 1}>{i + 1}</span>
+              ))}
+            </div>
+            <div className='code-lines'>
+              <pre>Your code here</pre>
+            </div>
+          </div>
         </section>
         <h2 className='progress-message'>Track your progress</h2>
-        <section className='progress-area'>
-        </section>
+        <section className='progress-area'></section>
       </div>
     </DragDropContext>
   );
