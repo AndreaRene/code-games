@@ -112,7 +112,7 @@ const GameContainer = () => {
       setTimeout(() => {
         setDropZones((prevZones) => {
           const resetZones = [...prevZones];
-          resetZones[dropZoneIndex] = null; // Clear the incorrect zone
+          resetZones[dropZoneIndex] = null; 
           return resetZones;
         });
       }, 800);
@@ -140,7 +140,7 @@ const GameContainer = () => {
                           ...provided.draggableProps.style,
                           background: snapshot.isDragging ? '#e0e0e0' : '',
                           padding: '8px',
-                          gridRow: index + 1, // Assign the row dynamically based on the index
+                          gridRow: index + 1,
                         }}
                       >
                         <code>{tag.content}</code>
@@ -161,7 +161,7 @@ const GameContainer = () => {
             <Droppable
               key={index}
               droppableId={`drop-${index}`}
-              isDropDisabled={!!zone && zone.isCorrect} // Disable drop if a tag is already in this zone and correct
+              isDropDisabled={!!zone && zone.isCorrect}
             >
               {(provided) => (
                 <div
@@ -186,9 +186,6 @@ const GameContainer = () => {
         </section>
         <h2 className='progress-message'>Track your progress</h2>
         <section className='progress-area'>
-          {/* <pre>
-            <code>{formatCodeWithIndentation(tagList)}</code>
-          </pre> */}
         </section>
       </div>
     </DragDropContext>
